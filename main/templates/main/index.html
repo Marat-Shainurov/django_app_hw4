@@ -5,7 +5,7 @@
 <div class="col-lg-4">
     <img src="{% mediapath product.img %}" class="img-thumbnail" alt="">
     <h2 class="fw-normal">{{product.name|title}}</h2>
-    <p>{{product.description|title}}</p>
+    <p>{{product.description|text_limit_to_display}}</p>
     <p>Stock - {{product.stock}}</p>
     <p>Price - {{product.price}}</p>
     <div class="btn-group">
