@@ -9,7 +9,7 @@ class Product(models.Model):
     description = models.TextField(verbose_name='prod_descr', **NULLABLE)
     price = models.IntegerField(verbose_name='prod_price')
     stock = models.IntegerField(verbose_name='prod_stock')
-    img = models.ImageField(upload_to='media/', verbose_name='product_img', **NULLABLE)
+    img = models.ImageField(upload_to='media/', verbose_name='product_img', default='media/device.jpeg', **NULLABLE)
 
     def __str__(self):
         return f'{self.id} {self.name}'
