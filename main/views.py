@@ -31,3 +31,11 @@ def add_product(request):
             new_product.save()
     context = {'page_title': 'Add a product'}
     return render(request, 'main/add_product.html', context)
+
+
+def promo_one(request):
+    return render(request, 'main/promo_page_1.html')
+
+
+def promo_two(request):
+    return render(request, 'main/promo_page_2.html')
