@@ -39,8 +39,10 @@ def add_product(request):
 
 
 def promo_one(request):
-    return render(request, 'main/promo_page_1.html')
+    context = {'page_title': 'Promo one'}
+    return render(request, 'main/promo_page_1.html', context)
 
 
 def promo_two(request):
-    return render(request, 'main/promo_page_2.html')
+    context = {'page_title': 'Promo two'}
+    return render(request, 'main/promo_page_2.html', context)
