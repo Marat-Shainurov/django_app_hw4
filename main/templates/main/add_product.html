@@ -1,0 +1,43 @@
+{% extends 'main/base.html'%}
+{% block content %}
+<h1>Add a new product here.</h1>
+<h2>Fill in the fields bellow:</h2>
+<br><br><br>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="input-group input-group-sm mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-sm">Name</span>
+        <input type="text" name="name" class="form-control" aria-label="Sizing example input"
+               aria-describedby="inputGroup-sizing-sm" required>
+    </div>
+    <div class="input-group input-group-sm mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-sm">Description</span>
+        <textarea class="form-control" name="description" aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"></textarea>
+
+    </div>
+    <div class="input-group input-group-sm mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-sm">Price</span>
+        <input type="text" class="form-control" name="price" aria-label="Sizing example input"
+               aria-describedby="inputGroup-sizing-sm" required>
+    </div>
+    <div class="input-group input-group-sm mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-sm">Stock</span>
+        <input type="text" class="form-control" name="stock" aria-label="Sizing example input"
+               aria-describedby="inputGroup-sizing-sm" required>
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Choose the file or the default value will be assigned
+            (media/device.jpeg)
+        </label>
+        <input class="form-control" type="file" id="formFile" name="img">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+</form>
+
+
+{% endblock%}
+
