@@ -29,5 +29,5 @@ def add_product(request):
             new_product = Product(name=name, description=description, price=price, stock=stock,
                                   img=os.path.join('media', img))
             new_product.save()
-
-    return render(request, 'main/add_product.html')
+    context = {'page_title': 'Add a product'}
+    return render(request, 'main/add_product.html', context)
