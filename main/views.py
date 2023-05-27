@@ -1,5 +1,6 @@
 import os.path
 
+from django.core.paginator import Paginator
 from django.shortcuts import render
 
 from main.models import Product
@@ -8,8 +9,12 @@ from main.models import Product
 def index(request):
     all_products = Product.objects.all()
 
+    paginator = Paginator(all_products, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'products': all_products,
+        'page_obj': page_obj,
         'page_title': 'Main page'
     }
     return render(request, 'main/index.html', context)
