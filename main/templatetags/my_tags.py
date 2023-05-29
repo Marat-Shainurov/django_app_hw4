@@ -1,14 +1,19 @@
+import os.path
+
 from django import template
 from django.templatetags.static import static
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 
+from config import settings
+
 register = template.Library()
 
 
 @register.simple_tag
-def mediapath(path_to_pic):
-    return static(path_to_pic)
+def mediapath(file_name):
+    media_url = settings.MEDIA_URL
+    return f'{media_url}{file_name}'
 
 
 @register.filter(needs_autoescape=True)
