@@ -23,15 +23,16 @@ class BlogDetailView(generic.DetailView):
         return context_data
 
 
-def switch_publish_status(request, slug):
-    blog_object = get_object_or_404(Blog, slug=slug)
+def switch_publish_status(request, pk):
+    blog_object = get_object_or_404(Blog, pk=pk)
 
-    if blog_object.is_publushed:
+    if blog_object.is_published:
         blog_object.is_published = False
     else:
         blog_object.is_published = True
 
-    return redirect(reverse('main: blog_detail'))
+    blog_object.save()
+    return redirect(reverse('blog:blog_list'))
 
 # class BlogCreateView(generic.CreateView):
 #     model = Blog
