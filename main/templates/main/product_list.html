@@ -1,13 +1,13 @@
 {% extends 'main/base.html'%}
-{% block content%}
+{% block content %}
 {% load my_tags %}
-{% for product in page_obj%}
+{% for product in page_obj %}
 <div class="col-lg-4">
     <img src="{% mediapath product.img %}" class="img-thumbnail" alt="">
-    <h2 class="fw-normal">{{product.name|title}}</h2>
-    <p>{{product.description|text_limit_to_display}}</p>
-    <p>Stock - {{product.stock}}</p>
-    <p>Price - {{product.price}}</p>
+    <h2 class="fw-normal">{{ product.name|title }}</h2>
+    <p>{{ product.description|text_limit_to_display }}</p>
+    <p>Stock - {{ product.stock }}</p>
+    <p>Price - {{ product.price }}</p>
     <div class="btn-group">
         <button type="button" class="btn btn-secondary btn-lg">Buy</button>
     </div>
@@ -20,9 +20,9 @@
         {% if page_obj.has_previous %}
         <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
         {% endif %}
-        {% for num in page_obj.paginator.page_range %}
-        <li class="page-item {% if num == page_obj.number %}active{% endif %}"><a class="page-link"
-                                                                                  href="?page={{ num }}">{{ num }}</a>
+        {% for page_number in page_obj.paginator.page_range %}
+        <li class="page-item {% if page_number == page_obj.number %}active{% endif %}">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
         </li>
         {% endfor %}
         {% if page_obj.has_next %}
