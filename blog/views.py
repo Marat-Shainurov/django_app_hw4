@@ -29,16 +29,15 @@ class BlogCreateView(generic.CreateView):
     success_url = reverse_lazy('blog:blog_list')
 
 
-#
-# class BlogUpdateView(generic.UpdateView):
-#     model = Blog
-#     fields = None
-#     success_url = reverse_lazy('blog:blog_detail')
-#
-#
-# class BlogDeleteView(generic.DetailView):
-#     model = Blog
-#     success_url = reverse_lazy('blog:blog_list')
+class BlogUpdateView(generic.UpdateView):
+    model = Blog
+    fields = None
+    success_url = reverse_lazy('blog:blog_list')
+
+
+class BlogDeleteView(generic.DeleteView):
+    model = Blog
+    success_url = reverse_lazy('blog:blog_list')
 
 
 def switch_publish_status(request, pk):

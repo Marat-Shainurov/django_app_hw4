@@ -24,6 +24,10 @@ class Blog(models.Model):
         self.slug = slug.replace(' ', '-').lower()
         super().save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        self.is_published = False
+        self.save()
+
     class Meta:
         verbose_name = 'Blog'
         verbose_name_plural = 'Blogs'

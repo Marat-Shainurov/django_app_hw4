@@ -18,13 +18,16 @@
 
         <nav>
             <a class="btn btn-outline-primary rounded-pill" href="{% url 'blog:blog_list' %}">Back</a>
-            <a class="btn btn-outline-danger rounded-pill float-end" href="{% url 'blog:switch_publish_status' object.pk %}">
+            <a class="btn btn-outline-warning rounded-pill float-end"
+               role=button href="{% url 'blog:switch_publish_status' object.pk %}">
                 {% if object.is_published %}
-                Unpublish blog
+                Unpublish
                 {% else %}
-                Publish blog
+                Publish
                 {% endif %}
-            </a>
+            </a><br><br>
+            <a class="btn btn-outline-danger rounded-pill float-end"
+               role=button href="{% url 'blog:blog_delete' object.slug %}">Delete</a>
         </nav>
 
     </div>
