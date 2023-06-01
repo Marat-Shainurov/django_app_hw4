@@ -3,6 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from blog.models import Blog
+from blog.services import send_email_hundred_views
 
 
 class BlogListView(generic.ListView):
@@ -25,6 +26,8 @@ class BlogDetailView(generic.DetailView):
         self.object.views += 1
         self.object.save()
 
+        if self.object.views == 112:
+            send_email_hundred_views()
         return context_data
 
 
