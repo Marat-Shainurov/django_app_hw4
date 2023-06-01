@@ -26,8 +26,9 @@ class BlogDetailView(generic.DetailView):
         self.object.views += 1
         self.object.save()
 
-        if self.object.views == 112:
+        if self.object.views == 100:
             send_email_hundred_views()
+
         return context_data
 
 

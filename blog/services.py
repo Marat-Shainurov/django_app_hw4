@@ -7,5 +7,5 @@ def send_email_hundred_views():
         'You articles are very popular!',
         'Congratulations! One of the blogs has been viewed 100 times!',
         from_email=settings.EMAIL_HOST_USER,
-        recipient_list=['shainurov.mar@yandex.ru']
+        recipient_list=[settings.EMAIL_HOST_USER]
     )
