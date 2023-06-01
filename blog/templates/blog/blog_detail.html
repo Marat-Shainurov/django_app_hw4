@@ -17,6 +17,10 @@
         </article>
 
         <nav>
+            <a class="btn btn-outline-danger rounded-pill float-end"
+               role=button href="{% url 'blog:blog_delete' object.slug %}">Delete</a>
+            <a class="btn btn-outline-info rounded-pill float-end"
+               role=button href="{% url 'blog:blog_update' object.slug %}">Edit</a>
             <a class="btn btn-outline-primary rounded-pill" href="{% url 'blog:blog_list' %}">Back</a>
             <a class="btn btn-outline-warning rounded-pill float-end"
                role=button href="{% url 'blog:switch_publish_status' object.pk %}">
@@ -25,9 +29,8 @@
                 {% else %}
                 Publish
                 {% endif %}
-            </a><br><br>
-            <a class="btn btn-outline-danger rounded-pill float-end"
-               role=button href="{% url 'blog:blog_delete' object.slug %}">Delete</a>
+            </a>
+
         </nav>
 
     </div>
