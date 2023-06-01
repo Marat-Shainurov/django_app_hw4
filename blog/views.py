@@ -23,21 +23,11 @@ class BlogDetailView(generic.DetailView):
         return context_data
 
 
-def switch_publish_status(request, pk):
-    blog_object = get_object_or_404(Blog, pk=pk)
+class BlogCreateView(generic.CreateView):
+    model = Blog
+    fields = ('heading', 'content', 'img', 'is_published')
+    success_url = reverse_lazy('blog:blog_list')
 
-    if blog_object.is_published:
-        blog_object.is_published = False
-    else:
-        blog_object.is_published = True
-
-    blog_object.save()
-    return redirect(reverse('blog:blog_list'))
-
-# class BlogCreateView(generic.CreateView):
-#     model = Blog
-#     fields = None
-#     success_url = reverse_lazy('blog:blog_detail')
 
 #
 # class BlogUpdateView(generic.UpdateView):
@@ -49,3 +39,17 @@ def switch_publish_status(request, pk):
 # class BlogDeleteView(generic.DetailView):
 #     model = Blog
 #     success_url = reverse_lazy('blog:blog_list')
+
+
+def switch_publish_status(request, pk):
+    blog_object = get_object_or_404(Blog, pk=pk)
+
+    if blog_object.is_published:
+        blog_object.is_published = False
+    else:
+        blog_object.is_published = True
+
+    blog_object.save()
+
+    slug = blog_object.slug
+    return redirect(reverse('blog:blog_detail', kwargs={'slug': slug}))

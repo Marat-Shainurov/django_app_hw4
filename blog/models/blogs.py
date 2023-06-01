@@ -11,7 +11,7 @@ class Blog(models.Model):
     img = models.ImageField(upload_to='blog/', verbose_name='preview')
     created = models.DateTimeField(auto_now_add=True, verbose_name='creation date')
     is_published = models.BooleanField(default=True, verbose_name='is_published')
-    views = models.IntegerField(verbose_name='views number', default=0)
+    views = models.IntegerField(verbose_name='views number', default=0, **NULLABLE)
 
     def __str__(self):
         return f'{self.heading} {self.slug}'
@@ -21,7 +21,7 @@ class Blog(models.Model):
         for char in self.heading:
             if char.isalnum() or char == ' ':
                 slug += char
-        self.slug = slug.replace(' ', '-')
+        self.slug = slug.replace(' ', '-').lower()
         super().save(*args, **kwargs)
 
     class Meta:

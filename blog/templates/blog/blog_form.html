@@ -1,0 +1,22 @@
+{% extends 'main/base.html'%}
+{% load static %}
+{% block content %}
+
+<main class="container">
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+        <h1>Input the blog's details</h1>
+        <br>
+        <form method="post" enctype="multipart/form-data" class="form-control row g-3 mb-3">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">
+                {% if object %}
+                Save
+                {% else %}
+                Create
+                {% endif %}
+            </button>
+        </form>
+    </div>
+</main>
+{% endblock%}
