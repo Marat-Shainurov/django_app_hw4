@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
@@ -8,6 +8,11 @@ from blog.models import Blog
 class BlogListView(generic.ListView):
     model = Blog
     extra_context = {'page_title': 'Blogs'}
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(is_published=True)
+        return queryset
 
 
 class BlogDetailView(generic.DetailView):
