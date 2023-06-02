@@ -1,5 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.text import slugify
+from unidecode import unidecode
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -17,11 +19,7 @@ class Blog(models.Model):
         return f'{self.heading} {self.slug}'
 
     def save(self, *args, **kwargs):
-        slug = ''
-        for char in self.heading:
-            if char.isalnum() or char == ' ':
-                slug += char
-        self.slug = slug.replace(' ', '-').lower()
+        self.slug = slugify(unidecode(self.heading))
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
