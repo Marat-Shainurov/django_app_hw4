@@ -35,7 +35,9 @@ class BlogDetailView(generic.DetailView):
 class BlogCreateView(generic.CreateView):
     model = Blog
     fields = ('heading', 'content', 'img', 'is_published')
-    success_url = reverse_lazy('blog:blog_list')
+
+    def get_success_url(self):
+        return reverse_lazy('blog:blog_detail', kwargs={'slug': self.object.slug})
 
 
 class BlogUpdateView(generic.UpdateView):
