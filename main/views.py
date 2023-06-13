@@ -1,4 +1,4 @@
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from main.models import Product
@@ -13,14 +13,36 @@ class ProductListView(generic.ListView):
         context['page_title'] = 'Main page'
         return context
 
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(is_active=True)
+        return queryset
+
+
+class ProductDetailView(generic.DetailView):
+    model = Product
+
 
 class ProductCreateView(generic.CreateView):
     model = Product
-    fields = ('name', 'description', 'price', 'stock', 'img')
+    fields = ('name', 'description', 'img')
     success_url = reverse_lazy('main:product_list')
     extra_context = {
         'page_title': 'Add a product'
     }
+
+
+class ProductUpdateView(generic.UpdateView):
+    model = Product
+    fields = ('name', 'description', 'img')
+
+    def get_success_url(self):
+        return reverse('main:product_detail', args=[self.kwargs.get('slug')])
+
+
+class ProductDeleteView(generic.DeleteView):
+    model = Product
+    success_url = reverse_lazy('main:product_list')
 
 
 class PromoOneView(generic.TemplateView):
