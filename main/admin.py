@@ -12,3 +12,4 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Version)
 class VersionAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'price', 'stock')
+    list_filter = ('product',)

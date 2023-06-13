@@ -73,8 +73,15 @@
     <img src="{% mediapath product.img %}" class="img-thumbnail" alt="">
     <h2 class="fw-normal">{{ product.name|title }}</h2>
     <p>{{ product.description|text_limit_to_display }}</p>
+    <p>{% for version in product.versions.all %}
+        {% if version.is_actual %}
+        {{ version.name }}
+        {% endif %}
+        {% endfor %}
+    </p>
     <div class="btn-group">
-        <a type="button" class="btn btn-secondary btn-lg" href="{% url 'main:product_detail' product.slug %}">Go to product</a>
+        <a type="button" class="btn btn-secondary btn-lg" href="{% url 'main:product_detail' product.slug %}">Go to
+            product</a>
     </div>
 </div><!-- /.col-lg-4 -->
 {% endfor %}

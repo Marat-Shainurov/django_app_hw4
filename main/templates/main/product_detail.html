@@ -7,6 +7,14 @@
     <div class="card-body">
         <h5 class="card-title">{{ object.name}}</h5>
         <p class="card-text">{{ object.description}}</p>
+        <p class="card-text">
+            {% for version in object.versions.all %}
+            {% if version.is_actual %}#
+            {{ version.name }}
+            {% endif %}
+            {% endfor %}
+        </p>
+
     </div>
 
     <div class="card-body">
