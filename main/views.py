@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
+from main.forms import ProductForm
 from main.models import Product
 
 
@@ -25,7 +26,7 @@ class ProductDetailView(generic.DetailView):
 
 class ProductCreateView(generic.CreateView):
     model = Product
-    fields = ('name', 'description', 'img')
+    form_class = ProductForm
     success_url = reverse_lazy('main:product_list')
     extra_context = {
         'page_title': 'Add a product'
@@ -34,7 +35,7 @@ class ProductCreateView(generic.CreateView):
 
 class ProductUpdateView(generic.UpdateView):
     model = Product
-    fields = ('name', 'description', 'img')
+    form_class = ProductForm
 
     def get_success_url(self):
         return reverse('main:product_detail', args=[self.kwargs.get('slug')])
