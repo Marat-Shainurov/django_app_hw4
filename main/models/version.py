@@ -11,7 +11,6 @@ class Version(models.Model):
     description = models.TextField(verbose_name='version_descr', **NULLABLE)
     price = models.IntegerField(verbose_name='version_price')
     stock = models.IntegerField(verbose_name='version_stock')
-    img = models.ImageField(upload_to='media/versions/', verbose_name='version_img')
 
     def __str__(self):
         return f'{self.name} {self.price}'

@@ -10,5 +10,5 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 @admin.register(Version)
-class ItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'price', 'stock', 'img')
+class VersionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description', 'price', 'stock')

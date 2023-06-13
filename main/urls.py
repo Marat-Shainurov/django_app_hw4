@@ -1,7 +1,8 @@
 from django.urls import path
 
 from main.apps import MainConfig
-from main.views import PromoOneView, PromoTwoView, ProductListView, ProductCreateView, ProductDetailView,ProductUpdateView ,ProductDeleteView
+from main.views import PromoOneView, PromoTwoView, ProductListView, ProductCreateView, ProductDetailView, \
+    ProductUpdateView, ProductDeleteView
 
 app_name = MainConfig.name
 
