@@ -24,7 +24,7 @@
 
         </div>
 
-        <div class="col-6">
+        <div class="col-4">
             <div class="card">
                 <div class="card-header">
                     <h3>Fill in info about the product's version</h3>
@@ -34,9 +34,14 @@
                     {% for form in formset.forms %}
                     {{ form.as_p}}
                     {% if not forloop.last %}
-                    <hr>
+                    <div class="card-footer">
+                        <br>
+                    </div>
                     {% endif %}
                     {% endfor%}
+                </div>
+                <div class="card-footer">
+                    <br>
                 </div>
             </div>
         </div>
