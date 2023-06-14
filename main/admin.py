@@ -11,5 +11,5 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Version)
 class VersionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'price', 'stock', 'is_actual', 'is_active')
+    list_display = ('pk', 'name', 'description', 'price', 'stock', 'is_actual', 'is_active')
     list_filter = ('product',)
