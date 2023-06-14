@@ -12,7 +12,7 @@ class Version(models.Model):
     description = models.TextField(verbose_name='version_descr', **NULLABLE)
     price = models.IntegerField(verbose_name='version_price')
     stock = models.IntegerField(verbose_name='version_stock')
-    is_active = models.BooleanField(verbose_name='is_active', **NULLABLE, default=True)
+    is_active = models.BooleanField(verbose_name='is_active')
 
     def __str__(self):
         return f'{self.name} {self.price}'
