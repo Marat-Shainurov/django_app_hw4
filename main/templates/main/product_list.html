@@ -74,7 +74,7 @@
     <h2 class="fw-normal">{{ product.name|title }}</h2>
     <p>{{ product.description|text_limit_to_display }}</p>
     <p>{% for version in product.versions.all %}
-        {% if version.is_actual %}
+        {% if version.is_active %}
         Actual version - {{ version.name }}
         {% endif %}
         {% endfor %}

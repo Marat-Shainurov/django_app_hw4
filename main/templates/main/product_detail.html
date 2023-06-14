@@ -9,7 +9,7 @@
         <p class="card-text">{{ object.description}}</p>
         <p class="card-text">
             {% for version in object.versions.all %}
-            {% if version.is_actual %}
+            {% if version.is_active %}
             Actual version - {{ version.name }}
             {% endif %}
             {% endfor %}

@@ -12,17 +12,16 @@ class Version(models.Model):
     description = models.TextField(verbose_name='version_descr', **NULLABLE)
     price = models.IntegerField(verbose_name='version_price')
     stock = models.IntegerField(verbose_name='version_stock')
-    is_actual = models.BooleanField(verbose_name='is_actual_version')
     is_active = models.BooleanField(verbose_name='is_active', **NULLABLE, default=True)
 
     def __str__(self):
         return f'{self.name} {self.price}'
 
     def save(self, *args, **kwargs):
-        if self.is_actual:
+        if self.is_active:
             for version in self.product.versions.all():
-                if version.is_actual and version is not self:
-                    version.is_actual = False
+                if version.is_active and version is not self:
+                    version.is_active = False
                     version.save()
         super().save(*args, **kwargs)
 
