@@ -9,8 +9,8 @@
         <p class="card-text">{{ object.description}}</p>
         <p class="card-text">
             {% for version in object.versions.all %}
-            {% if version.is_actual %}#
-            {{ version.name }}
+            {% if version.is_actual %}
+            Actual version - {{ version.name }}
             {% endif %}
             {% endfor %}
         </p>

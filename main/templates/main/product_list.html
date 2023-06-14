@@ -75,7 +75,7 @@
     <p>{{ product.description|text_limit_to_display }}</p>
     <p>{% for version in product.versions.all %}
         {% if version.is_actual %}
-        {{ version.name }}
+        Actual version - {{ version.name }}
         {% endif %}
         {% endfor %}
     </p>

@@ -18,6 +18,14 @@ class Version(models.Model):
     def __str__(self):
         return f'{self.name} {self.price}'
 
+    def save(self, *args, **kwargs):
+        if self.is_actual:
+            for version in self.product.versions.all():
+                if version.is_actual and version is not self:
+                    version.is_actual = False
+                    version.save()
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'version'
         verbose_name_plural = 'versions'
