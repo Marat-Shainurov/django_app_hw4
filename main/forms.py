@@ -17,7 +17,6 @@ class FormStyleMixin:
                 )
 
 
-
 class ProductForm(FormStyleMixin, forms.ModelForm):
     class Meta:
         model = Product
