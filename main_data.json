@@ -1,0 +1,144 @@
+[
+  {
+    "model": "main.product",
+    "pk": 150,
+    "fields": {
+      "name": "Laptop",
+      "slug": "laptop",
+      "description": "Best laptops on the market - UPDATED",
+      "img": "media/Laptop.jpeg",
+      "is_active": true
+    }
+  },
+  {
+    "model": "main.product",
+    "pk": 151,
+    "fields": {
+      "name": "Tablet",
+      "slug": "tablet",
+      "description": "Best tablets on the market",
+      "img": "media/Tablet.jpeg",
+      "is_active": true
+    }
+  },
+  {
+    "model": "main.version",
+    "pk": 2,
+    "fields": {
+      "product": 150,
+      "name": "Laptop version 1",
+      "description": "test 1 laptop version",
+      "price": 1000,
+      "stock": 1,
+      "is_active": false
+    }
+  },
+  {
+    "model": "main.version",
+    "pk": 3,
+    "fields": {
+      "product": 150,
+      "name": "Laptop version 2",
+      "description": "test 2 laptop",
+      "price": 1200,
+      "stock": 12,
+      "is_active": false
+    }
+  },
+  {
+    "model": "main.version",
+    "pk": 4,
+    "fields": {
+      "product": 151,
+      "name": "Tablet version 1",
+      "description": "test 1 tablet version",
+      "price": 500,
+      "stock": 5,
+      "is_active": false
+    }
+  },
+  {
+    "model": "main.version",
+    "pk": 6,
+    "fields": {
+      "product": 151,
+      "name": "Tablet version 2",
+      "description": "test 2",
+      "price": 450,
+      "stock": 7,
+      "is_active": false
+    }
+  },
+  {
+    "model": "main.version",
+    "pk": 7,
+    "fields": {
+      "product": 151,
+      "name": "tablet version 3",
+      "description": "test 3",
+      "price": 400,
+      "stock": 6,
+      "is_active": false
+    }
+  },
+  {
+    "model": "main.version",
+    "pk": 8,
+    "fields": {
+      "product": 150,
+      "name": "Laptop version 3",
+      "description": "test 3",
+      "price": 1300,
+      "stock": 12,
+      "is_active": false
+    }
+  },
+  {
+    "model": "main.version",
+    "pk": 9,
+    "fields": {
+      "product": 150,
+      "name": "Laptop version 4",
+      "description": "test 4 laptop version",
+      "price": 1500,
+      "stock": 6,
+      "is_active": false
+    }
+  },
+  {
+    "model": "main.version",
+    "pk": 10,
+    "fields": {
+      "product": 150,
+      "name": "Laptop version 5",
+      "description": "",
+      "price": 1600,
+      "stock": 15,
+      "is_active": false
+    }
+  },
+  {
+    "model": "main.version",
+    "pk": 14,
+    "fields": {
+      "product": 151,
+      "name": "Laptop version 4",
+      "description": "new version",
+      "price": 800,
+      "stock": 3,
+      "is_active": true
+    }
+  },
+  {
+    "model": "main.version",
+    "pk": 15,
+    "fields": {
+      "product": 150,
+      "name": "Laptop version 6",
+      "description": "New version",
+      "price": 1900,
+      "stock": 10,
+      "is_active": true
+    }
+  }
+]
