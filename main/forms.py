@@ -11,10 +11,6 @@ class FormStyleMixin:
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
-            if field_name == 'is_active':
-                self.fields[field_name] = forms.BooleanField(
-                    required=False, widget=forms.CheckboxInput(attrs={'class': 'checkbox-small'}), label=field_name
-                )
 
 
 class ProductForm(FormStyleMixin, forms.ModelForm):
@@ -42,3 +38,11 @@ class VersionForm(FormStyleMixin, forms.ModelForm):
     class Meta:
         model = Version
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field_name == 'is_active':
+                self.fields[field_name] = forms.BooleanField(
+                    required=False, widget=forms.CheckboxInput(attrs={'class': 'checkbox-small'}), label=field_name
+                )
