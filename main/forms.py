@@ -16,7 +16,7 @@ class FormStyleMixin:
 class ProductForm(FormStyleMixin, forms.ModelForm):
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = ('user_product', )
 
     def clean_name(self):
         prohibited_names = [

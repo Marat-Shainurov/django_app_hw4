@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
 from unidecode import unidecode
@@ -11,6 +12,8 @@ class Product(models.Model):
     description = models.TextField(verbose_name='prod_descr', **NULLABLE)
     img = models.ImageField(upload_to='media/', verbose_name='product_img')
     is_active = models.BooleanField(verbose_name='is_active', **NULLABLE, default=True)
+    user_product = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, **NULLABLE,
+                                     verbose_name='user')
 
     def __str__(self):
         return f'{self.name}'
