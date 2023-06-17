@@ -1,0 +1,23 @@
+{% extends 'main/base.html'%}
+{% block content %}
+<br><br><br>
+
+<div class="col-12">
+
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Log in issue</h3>
+                </div>
+                <div class="card-body">
+                  <h5>You have to log in first</h5>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" href="{% url 'users:login' %}">Log in</a>
+                </div>
+            </div>
+
+        </div>
+</div>
+
+{% endblock %}

@@ -55,7 +55,8 @@ def verify_email(request, email):
         else:
             raise ValidationError(f'You have used the wrong code!')
     else:
-        return render(request, 'users/verify_email.html')
+        context = {'page_title': 'Email verification'}
+        return render(request, 'users/verify_email.html', context)
 
 
 def restore_user(request):
@@ -73,4 +74,9 @@ def restore_user(request):
         user.save()
         return redirect(reverse('users:login'))
     else:
-        return render(request, 'users/restore_password.html')
+        context = {'page_title': 'Restore user'}
+        return render(request, 'users/restore_password.html', context)
+
+
+def login_warning(request):
+    return render(request, 'users/login_warning.html')
