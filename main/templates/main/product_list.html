@@ -79,6 +79,7 @@
         {% endif %}
         {% endfor %}
     </p>
+    <p class="card-text">Author - {{ product.user_product }}</p>
     <div class="btn-group">
         <a type="button" class="btn btn-secondary btn-lg" href="{% url 'main:product_detail' product.slug %}">Go to
             product</a>
