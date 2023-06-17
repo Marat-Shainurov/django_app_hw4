@@ -6,10 +6,10 @@ from django.contrib.auth.views import LogoutView as BaseLogoutView
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from users.forms import RegisterForm
+from users.forms import RegisterForm, ProfileForm
 from users.models import User
 
 
@@ -42,6 +42,15 @@ class RegisterView(generic.CreateView):
 
     def get_success_url(self):
         return reverse('users:verify_email', kwargs={'email': self.object.email})
+
+
+class ProfileView(generic.UpdateView):
+    model = User
+    form_class = ProfileForm
+    success_url = reverse_lazy('users:profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 def verify_email(request, email):
