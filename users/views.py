@@ -16,6 +16,11 @@ from users.models import User
 class LoginView(BaseLoginView):
     template_name = 'users/login.html'
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['page_title'] = 'Log in'
+        return context_data
+
 
 class LogoutView(BaseLogoutView):
     pass
@@ -43,6 +48,11 @@ class RegisterView(generic.CreateView):
     def get_success_url(self):
         return reverse('users:verify_email', kwargs={'email': self.object.email})
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['page_title'] = 'Register'
+        return context_data
+
 
 class ProfileView(generic.UpdateView):
     model = User
@@ -51,6 +61,11 @@ class ProfileView(generic.UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['page_title'] = 'Profile'
+        return context_data
 
 
 def verify_email(request, email):
@@ -88,4 +103,5 @@ def restore_user(request):
 
 
 def login_warning(request):
-    return render(request, 'users/login_warning.html')
+    contex = {'page_title': 'Login warning'}
+    return render(request, 'users/login_warning.html', contex)
