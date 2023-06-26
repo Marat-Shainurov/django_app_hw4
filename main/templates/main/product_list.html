@@ -70,6 +70,7 @@
 
 {% for product in page_obj %}
 <div class="col-lg-4">
+    {% if product.is_published %}
     <img src="{% mediapath product.img %}" class="img-thumbnail" alt="">
     <h2 class="fw-normal">{{ product.name|title }}</h2>
     <p>{{ product.description|text_limit_to_display }}</p>
@@ -84,6 +85,7 @@
         <a type="button" class="btn btn-secondary btn-lg" href="{% url 'main:product_detail' product.slug %}">Go to
             product</a>
     </div>
+    {% endif %}
 </div><!-- /.col-lg-4 -->
 {% endfor %}
 

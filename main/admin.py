@@ -6,7 +6,7 @@ from main.models.version import Version
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'description', 'img', 'is_active')
+    list_display = ('id', 'name', 'description', 'user_product', 'img', 'is_active')
 
 
 @admin.register(Version)

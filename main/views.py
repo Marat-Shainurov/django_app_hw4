@@ -1,5 +1,6 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms import inlineformset_factory
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
@@ -86,6 +87,13 @@ class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
 class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Product
     success_url = reverse_lazy('main:product_list')
+
+
+def make_unpublished(request, slug):
+    product = Product.objects.get(slug=slug)
+    product.is_published = not product.is_published
+    product.save()
+    return redirect(reverse('main:product_detail', kwargs={'slug': slug}))
 
 
 class PromoOneView(generic.TemplateView):
