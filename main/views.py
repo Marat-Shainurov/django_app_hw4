@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -6,7 +7,7 @@ from main.forms import ProductForm, VersionForm
 from main.models import Product, Version
 
 
-class ProductListView(generic.ListView):
+class ProductListView(LoginRequiredMixin, generic.ListView):
     model = Product
     paginate_by = 3
 
@@ -21,11 +22,11 @@ class ProductListView(generic.ListView):
         return queryset
 
 
-class ProductDetailView(generic.DetailView):
+class ProductDetailView(LoginRequiredMixin, generic.DetailView):
     model = Product
 
 
-class ProductCreateView(generic.CreateView):
+class ProductCreateView(LoginRequiredMixin, generic.CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('main:product_list')
@@ -55,7 +56,7 @@ class ProductCreateView(generic.CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(generic.UpdateView):
+class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Product
     form_class = ProductForm
 
@@ -82,7 +83,7 @@ class ProductUpdateView(generic.UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(generic.DeleteView):
+class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Product
     success_url = reverse_lazy('main:product_list')
 

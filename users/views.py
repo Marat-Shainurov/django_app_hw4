@@ -100,8 +100,3 @@ def restore_user(request):
     else:
         context = {'page_title': 'Restore user'}
         return render(request, 'users/restore_password.html', context)
-
-
-def login_warning(request):
-    contex = {'page_title': 'Login warning'}
-    return render(request, 'users/login_warning.html', contex)
