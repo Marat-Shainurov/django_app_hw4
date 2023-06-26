@@ -14,6 +14,7 @@ class Product(models.Model):
     is_active = models.BooleanField(verbose_name='is_active', **NULLABLE, default=True)
     user_product = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, **NULLABLE,
                                      verbose_name='user')
+    is_published = models.BooleanField(verbose_name='is_published', default=False, **NULLABLE)
 
     def __str__(self):
         return f'{self.name}'
@@ -29,3 +30,8 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'product'
         verbose_name_plural = 'products'
+        permissions = [
+            ('set_published',
+             'can publish/make unpublished'
+             )
+        ]
