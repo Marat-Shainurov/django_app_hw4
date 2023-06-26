@@ -1,6 +1,7 @@
 import random
 
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.views import LogoutView as BaseLogoutView
 from django.core.exceptions import ValidationError
@@ -54,7 +55,7 @@ class RegisterView(generic.CreateView):
         return context_data
 
 
-class ProfileView(generic.UpdateView):
+class ProfileView(LoginRequiredMixin, generic.UpdateView):
     model = User
     form_class = ProfileForm
     success_url = reverse_lazy('users:profile')
