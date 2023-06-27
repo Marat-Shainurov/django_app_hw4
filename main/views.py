@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, Group
 from django.contrib.contenttypes.models import ContentType
 from django.forms import inlineformset_factory
 from django.http import Http404
@@ -61,13 +61,30 @@ class ProductCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Product
     form_class = ProductForm
-    permission_required = 'main.change_product'
 
     def get_success_url(self):
+        group = Group.objects.get(name="moderator")
+        if not self.request.user.groups.filter(name=group).exists():
+            permission = Permission.objects.get(codename="change_product")
+            self.request.user.user_permissions.remove(permission)
         return reverse('main:product_detail', args=[self.kwargs.get('slug')])
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+
+        if not self.request.user.has_perm('main.change_product') and self.request.user != self.object.user_product:
+            raise Http404('You can\'t edit product that have not been added by you!')
+        elif not self.request.user.has_perm('main.change_product') and self.request.user == self.object.user_product:
+            content_type = ContentType.objects.get_for_model(Product)
+            permissions = Permission.objects.get(
+                codename="change_product",
+                content_type=content_type
+            )
+            self.request.user.user_permissions.add(permissions)
+        return self.object
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -88,19 +105,6 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, generic.Upd
             print(formset.errors)
         return super().form_valid(form)
 
-    def get_object(self, queryset=None):
-        self.object = super().get_object(queryset)
-
-        if self.object.user_product != self.request.user and not self.request.user.is_staff:
-            raise Http404('This is not your product! You can only edit product that have been added by you.')
-
-        content_type = ContentType.objects.get_for_model(Product)
-        permissions = Permission.objects.get(
-            codename="change_product",
-            content_type=content_type
-        )
-        self.request.user.user_permissions.add(permissions)
-        return self.object
 
 
 class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
@@ -117,7 +121,7 @@ class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 
 def make_unpublished(request, slug):
-    if not request.user.is_staff:
+    if not request.user.has_perm('main.set_published_product'):
         raise Http404('The publish/unpublish button is only available for moderators.')
     product = Product.objects.get(slug=slug)
     product.is_published = not product.is_published
