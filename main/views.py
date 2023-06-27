@@ -70,6 +70,7 @@ class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
         if not self.request.user.groups.filter(name=group).exists():
             permission = Permission.objects.get(codename="change_product")
             self.request.user.user_permissions.remove(permission)
+            self.request.user.save()
         return reverse('main:product_detail', args=[self.kwargs.get('slug')])
 
     def get_object(self, queryset=None):
