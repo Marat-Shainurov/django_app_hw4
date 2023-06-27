@@ -113,12 +113,6 @@ class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
         if self.object.user_product != self.request.user:
             raise Http404('This is not your product! You can only delete product that have been added by you.')
 
-        content_type = ContentType.objects.get_for_model(Product)
-        permissions = Permission.objects.get(
-            codename="delete_product",
-            content_type=content_type
-        )
-        self.request.user.user_permissions.add(permissions)
         return self.object
 
 
