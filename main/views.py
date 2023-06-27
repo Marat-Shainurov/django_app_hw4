@@ -61,9 +61,10 @@ class ProductCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
     model = Product
     form_class = ProductForm
+    permission_required = 'main.change_product'
 
     def get_success_url(self):
         return reverse('main:product_detail', args=[self.kwargs.get('slug')])
@@ -102,7 +103,6 @@ class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
         return self.object
 
 
-
 class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Product
     success_url = reverse_lazy('main:product_list')
@@ -110,7 +110,7 @@ class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
 
-        if self.object.user_product != self.request.user and not self.request.user.is_staff:
+        if self.object.user_product != self.request.user:
             raise Http404('This is not your product! You can only delete product that have been added by you.')
 
         content_type = ContentType.objects.get_for_model(Product)
