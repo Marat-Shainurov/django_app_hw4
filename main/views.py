@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
@@ -88,6 +89,9 @@ class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
+
+        if self.request.user.has_perm('main.change_product'):
+            return self.object
         if self.object.user_product == self.request.user:
             content_type = ContentType.objects.get_for_model(Product)
             permissions = Permission.objects.get(
@@ -105,6 +109,7 @@ class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy('main:product_list')
 
 
+@permission_required('main.set_publish_product')
 def make_unpublished(request, slug):
     product = Product.objects.get(slug=slug)
     product.is_published = not product.is_published
