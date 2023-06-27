@@ -1,5 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 from django.forms import inlineformset_factory
+from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -82,6 +85,19 @@ class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
         else:
             print(formset.errors)
         return super().form_valid(form)
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.user_product == self.request.user:
+            content_type = ContentType.objects.get_for_model(Product)
+            permissions = Permission.objects.get(
+                codename="change_product",
+                content_type=content_type
+            )
+            self.request.user.user_permissions.add(permissions)
+        else:
+            raise Http404('This is not your product! You can only edit product that have been added by you.')
+        return self.object
 
 
 class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):

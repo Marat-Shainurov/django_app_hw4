@@ -19,15 +19,6 @@
     </div>
 
     <div class="card-body">
-        {% if perms.main.change_product %}
-            <a href="{% url 'main:product_update' object.slug %}" class="btn btn-outline-info">Edit</a>
-            <a href="{% url 'main:product_delete' object.slug %}" class="btn btn-outline-danger">Delete</a>
-                {% if object.is_published %}
-                    <a href="{% url 'main:make_unpublished' object.slug %}" class="btn btn-outline-warning">Unpublish</a>
-                {% else %}
-                    <a href="{% url 'main:make_unpublished' object.slug %}" class="btn btn-outline-success">Publish</a>
-                {% endif %}
-        {% else %}
             {% if user == object.user_product %}
                 <a href="{% url 'main:product_update' object.slug %}" class="btn btn-outline-info">Edit</a>
                 <a href="{% url 'main:product_delete' object.slug %}" class="btn btn-outline-danger">Delete</a>
@@ -37,11 +28,10 @@
                     <a href="{% url 'main:make_unpublished' object.slug %}" class="btn btn-outline-success">Publish</a>
                 {% endif %}
             {% else %}
-                <a href="{% url 'main:product_update' object.slug %}" class="btn btn-outline-secondary disabled">Edit</a>
-                <a href="{% url 'main:product_delete' object.slug %}" class="btn btn-outline-secondary disabled">Delete</a>
-                <a href="{% url 'main:make_unpublished' object.slug %}" class="btn btn-outline-secondary disabled">Unpublish</a>
+                <a href="{% url 'main:product_update' object.slug %}" class="btn btn-outline-secondary ">Edit</a>
+                <a href="{% url 'main:product_delete' object.slug %}" class="btn btn-outline-secondary ">Delete</a>
+                <a href="{% url 'main:make_unpublished' object.slug %}" class="btn btn-outline-secondary ">Unpublish</a>
             {% endif %}
-        {% endif %}
     </div>
 </div>
 
