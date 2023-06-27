@@ -90,21 +90,36 @@ class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
 
-        if self.object.user_product == self.request.user and self.request.user.has_perm('main.change_product'):
-            content_type = ContentType.objects.get_for_model(Product)
-            permissions = Permission.objects.get(
-                codename="change_product",
-                content_type=content_type
-            )
-            self.request.user.user_permissions.add(permissions)
-            return self.object
-        else:
+        if self.object.user_product != self.request.user and not self.request.user.is_staff:
             raise Http404('This is not your product! You can only edit product that have been added by you.')
+
+        content_type = ContentType.objects.get_for_model(Product)
+        permissions = Permission.objects.get(
+            codename="change_product",
+            content_type=content_type
+        )
+        self.request.user.user_permissions.add(permissions)
+        return self.object
+
 
 
 class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Product
     success_url = reverse_lazy('main:product_list')
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+
+        if self.object.user_product != self.request.user and not self.request.user.is_staff:
+            raise Http404('This is not your product! You can only delete product that have been added by you.')
+
+        content_type = ContentType.objects.get_for_model(Product)
+        permissions = Permission.objects.get(
+            codename="delete_product",
+            content_type=content_type
+        )
+        self.request.user.user_permissions.add(permissions)
+        return self.object
 
 
 def make_unpublished(request, slug):
