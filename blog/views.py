@@ -59,11 +59,8 @@ class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, generic.Delete
     permission_required = 'blog.delete_blog'
 
 
-@permission_required('blog.set_published')
+@permission_required('blog.set_published', raise_exception=True)
 def switch_publish_status(request, pk):
-
-    if not request.user.has_perm('blog.set_published'):
-        raise Http404('set_published permission is needed!')
 
     blog_object = get_object_or_404(Blog, pk=pk)
 
