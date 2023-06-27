@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import Permission, Group
 from django.contrib.contenttypes.models import ContentType
@@ -107,7 +107,6 @@ class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
         return super().form_valid(form)
 
 
-
 class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Product
     success_url = reverse_lazy('main:product_list')
@@ -121,9 +120,10 @@ class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
         return self.object
 
 
+@permission_required('main.set_published')
 def make_unpublished(request, slug):
-    if not request.user.has_perm('main.set_published_product'):
-        raise Http404('The publish/unpublish button is only available for moderators.')
+    if not request.user.has_perm('main.set_published'):
+        raise Http404('set_published_product permission is needed!')
     product = Product.objects.get(slug=slug)
     product.is_published = not product.is_published
     product.save()

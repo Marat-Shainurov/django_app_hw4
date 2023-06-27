@@ -19,7 +19,7 @@
     </div>
 
     <div class="card-body">
-        {% if user.has_perm.main.change_product %}
+        {% if perms.main.change_product %}
             <a href="{% url 'main:product_update' object.slug %}" class="btn btn-outline-info">Edit</a>
             {% if user == object.user_product %}
                 <a href="{% url 'main:product_delete' object.slug %}" class="btn btn-outline-danger">Delete</a>
