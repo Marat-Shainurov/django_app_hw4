@@ -1,3 +1,6 @@
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -32,28 +35,36 @@ class BlogDetailView(generic.DetailView):
         return context_data
 
 
-class BlogCreateView(generic.CreateView):
+class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
     model = Blog
     fields = ('heading', 'content', 'img', 'is_published')
+    permission_required = 'blog.add_blog'
 
     def get_success_url(self):
         return reverse_lazy('blog:blog_detail', kwargs={'slug': self.object.slug})
 
 
-class BlogUpdateView(generic.UpdateView):
+class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
     model = Blog
     fields = ('heading', 'content', 'img', 'is_published')
+    permission_required = 'blog.change_blog'
 
     def get_success_url(self):
         return reverse_lazy('blog:blog_detail', kwargs={'slug': self.object.slug})
 
 
-class BlogDeleteView(generic.DeleteView):
+class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, generic.DeleteView):
     model = Blog
     success_url = reverse_lazy('blog:blog_list')
+    permission_required = 'blog.delete_blog'
 
 
+@permission_required('blog.set_published')
 def switch_publish_status(request, pk):
+
+    if not request.user.has_perm('blog.set_published'):
+        raise Http404('set_published permission is needed!')
+
     blog_object = get_object_or_404(Blog, pk=pk)
 
     if blog_object.is_published:

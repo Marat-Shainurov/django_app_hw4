@@ -29,3 +29,9 @@ class Blog(models.Model):
     class Meta:
         verbose_name = 'Blog'
         verbose_name_plural = 'Blogs'
+        permissions = [
+            (
+                'set_published',
+                'can publish/unpublish'
+            )
+        ]
