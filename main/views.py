@@ -1,7 +1,9 @@
-from django.contrib.auth.decorators import permission_required, login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.conf import settings
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Permission, Group
 from django.contrib.contenttypes.models import ContentType
+from django.core.cache import cache
 from django.forms import inlineformset_factory
 from django.http import Http404
 from django.shortcuts import redirect, render
@@ -10,11 +12,13 @@ from django.views import generic
 
 from main.forms import ProductForm, VersionForm
 from main.models import Product, Version
+from main.services import get_products_active
 
 
 class ProductListView(LoginRequiredMixin, generic.ListView):
     model = Product
     paginate_by = 3
+    ordering = 'pk'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -22,9 +26,20 @@ class ProductListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self, *args, **kwargs):
-        queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_active=True)
-        return queryset
+        if settings.CACHE_ENABLED:
+            key = 'prod_list'
+            prod_list = cache.get(key)
+            print('Cached data is used')
+            if prod_list is None:
+                queryset = super().get_queryset(*args, **kwargs)
+                prod_list = get_products_active(queryset)
+                cache.set(key, prod_list)
+            return prod_list
+        else:
+            queryset = super().get_queryset(*args, **kwargs)
+            prod_list = get_products_active(queryset)
+            print('DB data is used')
+        return prod_list
 
 
 class ProductDetailView(LoginRequiredMixin, generic.DetailView):
