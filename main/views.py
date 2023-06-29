@@ -29,11 +29,11 @@ class ProductListView(LoginRequiredMixin, generic.ListView):
         if settings.CACHE_ENABLED:
             key = 'prod_list'
             prod_list = cache.get(key)
-            print('Cached data is used')
             if prod_list is None:
                 queryset = super().get_queryset(*args, **kwargs)
                 prod_list = get_products_active(queryset)
                 cache.set(key, prod_list)
+            print('Cached data is used')
             return prod_list
         else:
             queryset = super().get_queryset(*args, **kwargs)
