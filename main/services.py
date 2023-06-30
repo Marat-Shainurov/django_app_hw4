@@ -10,7 +10,7 @@ def cache_products():
         key = 'products_list'
         products_list = cache.get(key)
         if products_list is None:
-            products_list = Product.objects.all()
+            products_list = Product.objects.filter()
             cache.set(key, products_list)
         return products_list
     else:
