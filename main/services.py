@@ -5,7 +5,6 @@ from main.models import Version, Product
 
 
 def cache_products():
-
     if settings.CACHE_ENABLED:
         key = 'products_list'
         products_list = cache.get(key)
@@ -25,3 +24,7 @@ def get_products_active(queryset):
 
 def get_versions_by_prod(prod):
     return Version.objects.filter(product=prod)
+
+
+def get_products_all(activity=True):
+    return Product.objects.all(is_active=activity)
