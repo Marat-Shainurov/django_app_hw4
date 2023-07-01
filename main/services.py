@@ -32,3 +32,18 @@ def get_products_all(activity=True):
 
 def get_categories_all_active(activity=True):
     return Category.objects.all(is_active=activity)
+
+
+def get_categories_all_active_cache():
+
+    if settings.CACHE_ENABLED:
+        key = 'category_list'
+        category_list = cache.get(key)
+        if category_list is None:
+            category_list = Category.objects.filter(is_active=True)
+            cache.set(key, category_list)
+        return category_list
+    else:
+        category_list = Category.objects.all(is_active=True)
+
+    return category_list
