@@ -8,6 +8,7 @@
         <h5 class="card-title">{{ object.name}}</h5>
         <p class="card-text">{{ object.description}}</p>
         <p class="card-text">Author - {{ object.user_product }}</p>
+        <p>Category - {{ object.category_product }}</p>
         <p class="card-text">
             {% for version in object.versions.all %}
             {% if version.is_active %}

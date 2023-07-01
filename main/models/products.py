@@ -3,6 +3,8 @@ from django.db import models
 from django.utils.text import slugify
 from unidecode import unidecode
 
+from main.models.category import Category
+
 NULLABLE = {'null': True, 'blank': True}
 
 
@@ -15,6 +17,8 @@ class Product(models.Model):
     user_product = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, **NULLABLE,
                                      verbose_name='user')
     is_published = models.BooleanField(verbose_name='is_published', default=False, **NULLABLE)
+    category_product = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='category_product',
+                                         **NULLABLE)
 
     def __str__(self):
         return f'{self.name}'

@@ -74,6 +74,7 @@
     <img src="{% mediapath product.img %}" class="img-thumbnail" alt="">
     <h2 class="fw-normal">{{ product.name|title }}</h2>
     <p>{{ product.description|text_limit_to_display }}</p>
+    <p>Category - {{ product.category_product }}</p>
     <p>{% for version in product.versions.all %}
         {% if version.is_active %}
         Actual version - {{ version.name }}

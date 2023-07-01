@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.cache import cache
 
-from main.models import Version, Product
+from main.models import Version, Product, Category
 
 
 def cache_products():
@@ -28,3 +28,7 @@ def get_versions_by_prod(prod):
 
 def get_products_all(activity=True):
     return Product.objects.all(is_active=activity)
+
+
+def get_categories_all_active(activity=True):
+    return Category.objects.all(is_active=activity)
